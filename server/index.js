@@ -57,7 +57,7 @@ app.post('/api/users/login', (req,res)=> {
     //요청된 이메일이 있을 때 비밀번호가 같은지 확인하다.
     userInfo.comparePassword(req.body.password , (err, isMatch) =>{
       if(!isMatch)
-      return res.json({ loginSuccess : false, massage: "비밀번호 틀림"})
+      return res.json({ loginSuccess : false, massage: "비밀번호 틀림"}) 
       
       userInfo.generateToken((err, user) => {
         if(err) return res.status(400).send(err);
@@ -87,11 +87,9 @@ app.get('/api/users/auth', auth, (req, res) => {
 })
 
 app.get('/api/users/logout', auth, (req, res)=> {
-  User.findOneAndUpdate({_id: req.user._id},
-    {token: ""},
-  (err,user) => {
+  User.findOneAndUpdate({_id: req.user._id}, {token: ""}, (err,user) => {
     if(err) return res.json({ success: false, err});
-    return res.status(200).send({
+    return res.clearCookie('x_auth').status(200).json({
       success: true
     })
   })

@@ -22,7 +22,7 @@ function LoginPage(props) {
 
   const initialEmail = localStorage.getItem("rememberMe") ? localStorage.getItem("rememberMe") : '';
   
-  console.log(props);
+  //console.log(props);
   return (
     <Formik
       initialValues={{

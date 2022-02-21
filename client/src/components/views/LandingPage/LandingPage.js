@@ -1,6 +1,6 @@
 //첫페이지 말 그대로 초기 화면
-import React, {useEffect} from 'react'
-import axios from 'axios';
+import React from 'react'
+//import axios from 'axios';
 import { withRouter } from 'react-router-dom';
 import { FaCode } from 'react-icons/fa';
 
