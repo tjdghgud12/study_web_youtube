@@ -1,37 +1,42 @@
-import React, { useEffect } from 'react'; 
-import { useDispatch } from  'react-redux';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect } from 'react';
 import { auth } from '../_actions/user_action';
+import { useSelector, useDispatch } from "react-redux";
 
-export default function (SpecificComponont, option, adminRoute = null) {
-
+export default function Auth(SpecificComponent, option, adminRoute = null) {
     function AuthenticationCheck(props) {
-        const dispatch = useDispatch()
-        
+
+        let user = useSelector(state => state.user);
+        const dispatch = useDispatch();
+
         useEffect(() => {
-            dispatch(auth())
-                .then(response => {
-                    //console.log(response)
-                    
-                    if(!response.payload.isAuth) {  //로그인한 상태
-                        if(option) {
-                            props.history.push('/login')
-                        }
-                    } else {        //로그인 안한 상태
-                        if(adminRoute && !response.payload.isAdmin){
+            //To know my current status, send Auth request 
+            dispatch(auth()).then(response => {
+                //Not Loggined in Status 
+                if (!response.payload.isAuth) {
+                    if (option) {
+                        props.history.push('/login')
+                    }
+                    //Loggined in Status 
+                } else {
+                    //supposed to be Admin page, but not admin person wants to go inside
+                    if (adminRoute && !response.payload.isAdmin) {
+                        props.history.push('/')
+                    }
+                    //Logged in Status, but Try to go into log in page 
+                    else {
+                        if (option === false) {
                             props.history.push('/')
-                        } else {
-                            if(option === false) props.history.push('/')
                         }
                     }
-                })
+                }
+            })
+
         }, [])
+
         return (
-            <SpecificComponont />
+            <SpecificComponent {...props} user={user} />
         )
     }
-
-
-
-
     return AuthenticationCheck
 }

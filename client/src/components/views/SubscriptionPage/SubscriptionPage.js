@@ -1,18 +1,22 @@
-//첫페이지 말 그대로 초기 화면
 import { Card, Row, Typography, Avatar, Col } from 'antd';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { FaCode } from 'react-icons/fa';
 import moment from 'moment';
+
 const { Title } = Typography
 const { Meta } = Card
 
-function LandingPage() {
+function SubscriptionPage() {
+        
     const [Videos, setVideos] = useState([])
 
     useEffect(() => {
+        const SubscriptionVariable = { 
+            userFrom: localStorage.getItem('userId')
+         }
         //[input] <= 이게 없으면 이 함수 계속 실행. 만약 있다면 dom이 업데이트 될때 한번 만 실행
-        axios.get('/api/video/getVideos')
+        axios.post('/api/video/getSubscriptionVideos', SubscriptionVariable)
             .then(response => {
                 if(response.data.success) {
                     //console.log(response.data.videos)
@@ -63,4 +67,4 @@ function LandingPage() {
     )
 }
 
-export default LandingPage
+export default SubscriptionPage
