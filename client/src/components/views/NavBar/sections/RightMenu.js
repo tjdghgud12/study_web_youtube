@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 
 function RightMenu(props) {
   const user = useSelector(state => state.user)
+  let logInUser = document.cookie.match('x_auth')
 
   const logoutHandler = () => {
     axios.get(`/api/users/logout`).then(response => {
@@ -19,7 +20,7 @@ function RightMenu(props) {
     });
   };
 
-  if (user.userData && user.userData.isAuth) {   //유저 데이터가 있고, 유저 데이터의 isAuth가 false라면
+  if (logInUser) {   //유저 데이터가 있고, 유저 데이터의 isAuth가 false라면
     console.log("right1")
     return (
       <Menu mode="horizontal">
@@ -36,10 +37,10 @@ function RightMenu(props) {
     console.log(user.userData)
     return (
       <Menu mode="horizontal">
-        <Menu.Item key="mail">
+        <Menu.Item key="signin">
           <a href="/login">Signin</a>
         </Menu.Item>
-        <Menu.Item key="app">
+        <Menu.Item key="signup">
           <a href="/register">Signup</a>
         </Menu.Item>
       </Menu>

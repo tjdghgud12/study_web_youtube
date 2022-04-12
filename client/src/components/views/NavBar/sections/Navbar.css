@@ -38,16 +38,14 @@
 
 .menu__container .menu_left {
   padding: 10px 0px;
-  width: auto;
-  text-align: left;
+  width: 30%;
+  float: left;
 }
 
 .menu__container .menu_right {
   float: right;
-  width: auto;
-  padding: 10px 0px;
-  text-align: right;
-  margin-right: 0px;
+  width: 30%;
+  padding: 10px 3px;
   margin-left: auto;
 }
 
